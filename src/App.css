@@ -27,3 +27,29 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.tile {
+  height: 50px;
+  width: 50px;
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.color-red {
+  color: red;
+}
+.color-white {
+  color: grey;
+}
+.color-blue {
+  color: dodgerblue;
+}
+.color-green {
+  color: forestgreen;
+}
+.color-yellow {
+  color: orange;
+}
+.color-rainbow {
+  color: mediumpurple;
+}
