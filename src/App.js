@@ -29,38 +29,26 @@ class App extends Component {
 }
 
 class Tile extends React.Component {
-  constructor(props) {
-    super(props);
-    this.rank = props.tile.rank;
-    this.color = props.tile.color;
-  }
-
   render() {
     return (
-      <button className={`tile color-${this.color}`}>
-        {this.rank}
+      <button className={`tile color-${this.props.tile.color}`}>
+        {this.props.tile.rank}
       </button>
     );
   }
 }
 
 class PlayerHand extends React.Component {
-  constructor(props) {
-    super(props);
-    this.tiles = props.player.tiles;
-  }
-
   renderTile(tile) {
-    return <Tile tile={tile}/>
+    return <Tile tile={tile} key={tile.id}/>
   }
 
   render() {
+    const renderedTiles = this.props.player.tiles.map(tile => this.renderTile(tile));
     return (
       <div className="player-hand">
-        {this.renderTile(this.tiles[0])}
-        {this.renderTile(this.tiles[1])}
-        {this.renderTile(this.tiles[2])}
-        {this.renderTile(this.tiles[3])}
+        {this.props.player.name}
+        {renderedTiles}
       </div>
     );
   }
@@ -73,19 +61,17 @@ class Board extends React.Component {
   }
 
   renderPlayerHand(player) {
-    return <PlayerHand player={player}/>;
+    return <PlayerHand player={player} key={player.player_index}/>;
   }
 
   render() {
     const status = 'Next player: X';
+    const renderedPlayers = this.players.map(player => this.renderPlayerHand(player));
 
     return (
       <div>
         <div className="status">{status}</div>
-        {this.renderPlayerHand(this.players[0])}
-        {this.renderPlayerHand(this.players[1])}
-        {this.renderPlayerHand(this.players[2])}
-        {this.renderPlayerHand(this.players[3])}
+        {renderedPlayers}
       </div>
     );
   }
