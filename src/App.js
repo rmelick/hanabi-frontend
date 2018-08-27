@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
 import example_state from "./example_state";
-import example_state_2 from "./example_state2";
 console.log("example_state");
 console.log(example_state);
 
@@ -33,19 +30,19 @@ class Tile extends React.Component {
   render() {
     return (
       <button className={`tile color-${this.props.tile.color}`}>
-        {this.props.tile.rank}
+        {this.props.tile.rank ? this.props.tile.rank : ''}
       </button>
     );
   }
 }
 
 class PlayerHand extends React.Component {
-  renderTile(tile) {
-    return <Tile tile={tile} key={tile.id}/>
+  static renderTile(tile) {
+    return <Tile tile={tile} key={tile.public_id}/>
   }
 
   render() {
-    const renderedTiles = this.props.player.tiles.map(tile => this.renderTile(tile));
+    const renderedTiles = this.props.player.tiles.map(tile => PlayerHand.renderTile(tile));
     return (
       <div className="player-hand">
         {this.props.player.name}
@@ -56,13 +53,13 @@ class PlayerHand extends React.Component {
 }
 
 class Board extends React.Component {
-  renderPlayerHand(player) {
+  static renderPlayerHand(player) {
     return <PlayerHand player={player} key={player.player_index}/>;
   }
 
   render() {
     const status = 'Next player: X';
-    const renderedPlayers = this.props.game_state.players.map(player => this.renderPlayerHand(player));
+    const renderedPlayers = this.props.game_state.players.map(player => Board.renderPlayerHand(player));
 
     return (
       <div>
@@ -76,21 +73,26 @@ class Board extends React.Component {
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    this.state1 = example_state;
-    this.state2 = example_state_2;
-
-    this.state = this.state1;
-    this.current_state = 1
+    this.state = example_state;
   }
 
   refreshGame = () => {
-    if (this.current_state === 1) {
-      this.setState(this.state2);
-      this.current_state = 2;
-    } else {
-      this.setState(this.state1);
-      this.current_state = 1;
-    }
+    fetch("http://localhost:8080/gameState")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState(result);
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )
   };
 
   render() {
