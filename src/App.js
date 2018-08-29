@@ -52,14 +52,64 @@ class PlayerHand extends React.Component {
   }
 }
 
+class DrawPile extends React.Component {
+  render() {
+    return <div className="drawPile">Draw Pile: {this.props.draw_pile.tiles_remaining}</div>
+  }
+}
+
+class PlayedTiles extends React.Component {
+  static renderTile(tile) {
+    return <Tile tile={tile} key={tile.public_id}/>
+  }
+
+  render() {
+    const renderedTiles = this.props.tiles.map(tile => PlayedTiles.renderTile(tile));
+    return (
+      <div className="player-tiles">
+        {this.props.color}
+        {renderedTiles}
+      </div>
+    );
+  }
+}
+
+class DiscardPile extends React.Component {
+  static renderTile(tile) {
+    return <Tile tile={tile} key={tile.public_id}/>
+  }
+
+  render() {
+    const renderedTiles = this.props.discard_pile.tiles.map(tile => DiscardPile.renderTile(tile));
+    return (
+      <div className="discard-pile">
+        Discard Pile
+        {renderedTiles}
+      </div>
+    );
+  }
+}
+
 class Board extends React.Component {
+  static renderPlayedTiles(color, tiles) {
+    return <PlayedTiles color={color} tiles={tiles}/>;
+  }
+
+  render() {
+    const tiles = this.props.board.played_tiles;
+    const renderedTiles = Object.keys(tiles).forEach(color => Board.renderPlayedTiles(color, tiles[color]));
+    return (<div className="board">{renderedTiles}</div>);
+  }
+}
+
+class PlayerHands extends React.Component {
   static renderPlayerHand(player) {
     return <PlayerHand player={player} key={player.player_index}/>;
   }
 
   render() {
     const status = 'Next player: X';
-    const renderedPlayers = this.props.game_state.players.map(player => Board.renderPlayerHand(player));
+    const renderedPlayers = this.props.players.map(player => PlayerHands.renderPlayerHand(player));
 
     return (
       <div>
@@ -101,8 +151,17 @@ class Game extends React.Component {
         <Button variant="contained" color="primary" onClick={this.refreshGame}>
           Fresh Game
         </Button>
-        <div className="game-board">
-          <Board game_state={this.state}/>
+        <div className="player-hands">
+          <PlayerHands players={this.state.players}/>
+        </div>
+        <div className="draw-pile">
+          <DrawPile draw_pile={this.state.draw_pile}/>
+        </div>
+        <div className="discard-pile">
+          <DiscardPile discard_pile={this.state.discard_pile}/>
+        </div>
+        <div className="board">
+          <Board board={this.state.board}/>
         </div>
         <div className="game-info">
           <div>{/* status */}</div>
