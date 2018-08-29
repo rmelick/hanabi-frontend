@@ -168,8 +168,8 @@ class Game extends React.Component {
           <Board board={this.state.board}/>
         </div>
         <div className="game-info">
-          <div>{/* status */}</div>
-          <ol>{/* TODO */}</ol>
+          <div>Clues Remaining: {this.state.clues_remaining}</div>
+          <ol>Mistakes Remaining: {this.state.mistakes_remaining}</ol>
         </div>
       </div>
     );
