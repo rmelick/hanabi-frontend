@@ -97,8 +97,12 @@ class Board extends React.Component {
 
   render() {
     const tiles = this.props.board.played_tiles;
-    const renderedTiles = Object.keys(tiles).forEach(color => Board.renderPlayedTiles(color, tiles[color]));
-    return (<div className="board">{renderedTiles}</div>);
+    const renderedTiles = Object.keys(tiles).map(color => Board.renderPlayedTiles(color, tiles[color]));
+    return (
+      <div className="board">
+        Board Is
+        {renderedTiles}
+      </div>);
   }
 }
 
