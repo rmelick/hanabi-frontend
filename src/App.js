@@ -137,6 +137,7 @@ class Game extends React.Component {
       .then(
         (result) => {
           this.setState({game_id: result.game_id});
+          this.refreshGameState();
         },
         (error) => {
           this.setState({
