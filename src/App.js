@@ -127,15 +127,33 @@ class PlayerHands extends React.Component {
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    this.state = example_state;
+    this.state = {game: example_state};
   }
 
-  refreshGame = () => {
-    fetch("http://localhost:8080/gameState")
+
+  newGame = () => {
+    fetch("http://localhost:8080/newGame?numPlayers=4", {method: "POST"})
       .then(res => res.json())
       .then(
         (result) => {
-          this.setState(result);
+          this.setState({game_id: result.game_id});
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )
+  };
+
+
+  refreshGameState = () => {
+    fetch("http://localhost:8080/gameState/" + this.state.game_id)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({game: result});
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
@@ -152,24 +170,27 @@ class Game extends React.Component {
   render() {
     return (
       <div className="game">
-        <Button variant="contained" color="primary" onClick={this.refreshGame}>
-          Fresh Game
+        <Button variant="contained" color="primary" onClick={this.newGame}>
+          New Game
+        </Button>
+        <Button variant="contained" color="primary" onClick={this.refreshGameState}>
+          Refresh Game State
         </Button>
         <div className="player-hands">
-          <PlayerHands players={this.state.players}/>
+          <PlayerHands players={this.state.game.players}/>
         </div>
         <div className="draw-pile">
-          <DrawPile draw_pile={this.state.draw_pile}/>
+          <DrawPile draw_pile={this.state.game.draw_pile}/>
         </div>
         <div className="discard-pile">
-          <DiscardPile discard_pile={this.state.discard_pile}/>
+          <DiscardPile discard_pile={this.state.game.discard_pile}/>
         </div>
         <div className="board">
-          <Board board={this.state.board}/>
+          <Board board={this.state.game.board}/>
         </div>
         <div className="game-info">
-          <div>Clues Remaining: {this.state.clues_remaining}</div>
-          <ol>Mistakes Remaining: {this.state.mistakes_remaining}</ol>
+          <div>Clues Remaining: {this.state.game.clues_remaining}</div>
+          <ol>Mistakes Remaining: {this.state.game.mistakes_remaining}</ol>
         </div>
       </div>
     );
