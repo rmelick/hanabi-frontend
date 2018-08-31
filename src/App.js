@@ -92,7 +92,7 @@ class DiscardPile extends React.Component {
 
 class Board extends React.Component {
   static renderPlayedTiles(color, tiles) {
-    return <PlayedTiles color={color} tiles={tiles}/>;
+    return <PlayedTiles color={color} tiles={tiles} key={color}/>;
   }
 
   render() {
