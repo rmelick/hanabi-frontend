@@ -1,18 +1,25 @@
 import React from "react";
-import {PlayerHand} from "./PlayerHand";
+import {OtherPlayerHand} from "./OtherPlayerHand";
+import {ThisPlayerHand} from "./ThisPlayerHand";
 
 function renderPlayerHand(player) {
-  return <PlayerHand player={player} key={player.player_index}/>;
+  return <OtherPlayerHand player={player} key={player.id}/>;
+}
+
+function renderThisPlayerHand(player) {
+  return <ThisPlayerHand player={player} key={player.id}/>;
 }
 
 export function PlayerHands(props) {
   const status = 'Next player: X';
-  const renderedPlayers = props.players.map(player => renderPlayerHand(player));
+  const thisPlayer = renderThisPlayerHand(props.players.this_player);
+  const otherPlayers = props.players.other_players.map(player => renderPlayerHand(player));
 
   return (
     <div>
       <div className="status">{status}</div>
-      {renderedPlayers}
+      {thisPlayer}
+      {otherPlayers}
     </div>
   );
 }

@@ -2,10 +2,15 @@ import React from "react";
 import {Tile} from "./Tile";
 
 function renderTile(tile) {
-  return <Tile tile={tile} key={tile.public_id}/>
+  return <Tile tile={tile} key={tile.public_id} onClick={() => showPlayDiscardModal(tile)}/>
 }
 
-export function PlayerHand(props) {
+function showPlayDiscardModal(tile) {
+  console.log("play/discard");
+  console.log(tile);
+}
+
+export function ThisPlayerHand(props) {
   const renderedTiles = props.player.tiles.map(tile => renderTile(tile));
   return (
     <div className="player-hand">
