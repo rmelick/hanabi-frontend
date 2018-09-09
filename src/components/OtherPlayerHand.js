@@ -1,15 +1,11 @@
 import React from "react";
 import {Tile} from "./Tile";
-import {HintButton} from "./HintButton";
+import {HintSelector} from "./HintSelector";
 
 function renderTile(tile) {
   return <Tile tile={tile} key={tile.public_id} />
 }
 
-function showHintModal(player) {
-  console.log("showHintModal");
-  console.log(player);
-}
 
 export function OtherPlayerHand(props) {
   const renderedTiles = props.player.tiles.map(tile => renderTile(tile));
@@ -17,7 +13,8 @@ export function OtherPlayerHand(props) {
     <div className="player-hand">
       {props.player.name}
       {renderedTiles}
-      <HintButton onClick={() => showHintModal(props.player)}/>
+      <HintSelector title="Color Hint" choices={props.hints.color_hints}/>
+      <HintSelector title="Rank Hint" choices={props.hints.rank_hints}/>
     </div>
   );
 }

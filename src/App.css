@@ -53,3 +53,7 @@
 .color-rainbow {
   color: mediumpurple;
 }
+
+.HintSelector {
+  display: inline;
+}
