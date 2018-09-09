@@ -28,7 +28,7 @@ export class GameContainer extends React.Component {
 
 
   refreshGameState = () => {
-    fetch("http://localhost:8080/gameState/" + this.state.game_id)
+    fetch(`http://localhost:8080/games/${this.state.game_id}/state/`)
       .then(res => res.json())
       .then(
         (result) => {
