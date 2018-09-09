@@ -193,13 +193,27 @@
                     "color": null,
                     "id": null,
                     "public_id": "public-yellow-5-1",
-                    "rank": 0
+                    "rank": 0,
+                    "hint_information": {
+                        "positive_hints_given": [
+                            {
+                                "color": "yellow"
+                            }
+                        ]
+                    }
                 },
                 {
                     "color": null,
                     "id": null,
                     "public_id": "public-rainbow-1-3",
-                    "rank": 0
+                    "rank": 0,
+                    "hint_information": {
+                        "positive_hints_given": [
+                            {
+                                "rank": 1
+                            }
+                        ]
+                    }
                 },
                 {
                     "color": null,

@@ -4,7 +4,7 @@ import Select from "@material-ui/core/Select/Select";
 
 
 function renderMenuItem(value) {
-  return <option value={value}>{value}</option>
+  return <option value={value} key={value}>{value}</option>
 }
 
 export function HintSelector(props) {
