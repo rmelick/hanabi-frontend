@@ -67,9 +67,41 @@ export class GameContainer extends React.Component {
       )
   };
 
+  giveHint = (playerId, color, rank) => {
+    console.log(`giving hint ${playerId} ${color} ${rank}`);
+    fetch(`http://localhost:8080/games/${this.state.game_id}/move/hint`,
+      {
+        headers: {
+          "X-Player-Id": this.state.player_id,
+          'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({
+          "player_id": playerId,
+          "color": color,
+          "rank": rank
+        })
+      })
+      .then(
+        (result) => {
+          this.refreshGameState();
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )
+  };
+
   render() {
     return (
-      <Game game={this.state.game} newGameFunction={() => this.newGame()} refreshGameStateFunction={() => this.refreshGameState()}/>
+      <Game game={this.state.game}
+            newGameFunction={() => this.newGame()}
+            refreshGameStateFunction={() => this.refreshGameState()}
+            giveHintFunction={(playerId, color, rank) => this.giveHint(playerId, color, rank)}
+      />
     );
   }
 }

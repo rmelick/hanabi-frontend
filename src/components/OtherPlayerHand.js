@@ -13,8 +13,10 @@ export function OtherPlayerHand(props) {
     <div className="player-hand">
       {props.player.name}
       {renderedTiles}
-      <HintSelector title="Color Hint" choices={props.hints.color_hints}/>
-      <HintSelector title="Rank Hint" choices={props.hints.rank_hints}/>
+      <HintSelector title="Color Hint" choices={props.hints.color_hints}
+                    giveHintFunction={(color) => props.giveHintFunction(props.player.id, color, null)}/>
+      <HintSelector title="Rank Hint" choices={props.hints.rank_hints}
+                    giveHintFunction={(rank) => props.giveHintFunction(props.player.id, null, rank)}/>
     </div>
   );
 }
