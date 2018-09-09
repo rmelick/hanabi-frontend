@@ -15,6 +15,23 @@ export class GameContainer extends React.Component {
       .then(
         (result) => {
           this.setState({game_id: result.game_id});
+          this.joinGame();
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )
+  };
+
+  joinGame = () => {
+    fetch(`http://localhost:8080/games/${this.state.game_id}/join`, {method: "POST"})
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({player_id: result.player_id});
           this.refreshGameState();
         },
         (error) => {
@@ -28,7 +45,7 @@ export class GameContainer extends React.Component {
 
 
   refreshGameState = () => {
-    fetch(`http://localhost:8080/games/${this.state.game_id}/state/`)
+    fetch(`http://localhost:8080/games/${this.state.game_id}/state?playerId=${this.state.player_id}`)
       .then(res => res.json())
       .then(
         (result) => {
