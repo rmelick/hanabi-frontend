@@ -4,6 +4,9 @@ import {PlayerHands} from "./PlayerHands";
 import {DrawPile} from "./DrawPile";
 import {DiscardPile} from "./DiscardPile";
 import {Board} from "./Board";
+import {CurrentPlayer} from "./CurrentPlayer";
+import {MistakesCounter} from "./MistakesCounter";
+import {HintsTracker} from "./HintsTracker";
 
 export function Game(props) {
   return (
@@ -14,22 +17,13 @@ export function Game(props) {
       <Button variant="contained" color="primary" onClick={props.refreshGameStateFunction}>
         Refresh Game State
       </Button>
-      <div className="player-hands">
-        <PlayerHands players={props.game.players} hints={props.game.available_moves.hints} giveHintFunction={props.giveHintFunction}/>
-      </div>
-      <div className="draw-pile">
-        <DrawPile draw_pile={props.game.draw_pile}/>
-      </div>
-      <div className="discard-pile">
-        <DiscardPile discard_pile={props.game.discard_pile}/>
-      </div>
-      <div className="board">
-        <Board board={props.game.board}/>
-      </div>
-      <div className="game-info">
-        <div>Clues Remaining: {props.game.clues_remaining}</div>
-        <ol>Mistakes Remaining: {props.game.mistakes_remaining}</ol>
-      </div>
+      <CurrentPlayer players={props.game.players}/>
+      <PlayerHands players={props.game.players} hints={props.game.available_moves.hints} giveHintFunction={props.giveHintFunction}/>
+      <DrawPile draw_pile={props.game.draw_pile}/>
+      <DiscardPile discard_pile={props.game.discard_pile}/>
+      <Board board={props.game.board}/>
+      <MistakesCounter mistakes_remaining={props.game.mistakes_remaining}/>
+      <HintsTracker hints_remaining={props.game.clues_remaining}/>
     </div>
   );
 }
