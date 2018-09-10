@@ -1,5 +1,5 @@
 import React from "react";
-import example_state from "../example_state";
+import example_state from "../../example_state";
 import {Game} from "./Game";
 
 export class GameContainer extends React.Component {
