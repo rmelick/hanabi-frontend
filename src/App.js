@@ -7,6 +7,8 @@ import {
   Route,
   Link
 } from 'react-router-dom'
+import {LobbyContainer} from "./components/lobby/LobbyContainer";
+import GameLobbyContainer from "./components/gamelobby/GameLobby";
 
 console.log("example_state");
 console.log(example_state);
@@ -17,12 +19,6 @@ const Home = () => (
   </div>
 );
 
-const Lobby = () => (
-  <div>
-    <h2>Lobby</h2>
-  </div>
-);
-
 const BasicExample = () => (
   <BrowserRouter>
     <div>
@@ -30,13 +26,15 @@ const BasicExample = () => (
         <li><Link to="/">Home</Link></li>
         <li><Link to="/game">Game</Link></li>
         <li><Link to="/lobby">Lobby</Link></li>
+        <li><Link to="/gamelobby">Game Lobby</Link></li>
       </ul>
 
       <hr/>
 
       <Route exact path="/" component={Home}/>
       <Route path="/game" component={GameContainer}/>
-      <Route path="/lobby" component={Lobby}/>
+      <Route path="/lobby" component={LobbyContainer}/>
+      <Route path="/gamelobby" component={GameLobbyContainer}/>
     </div>
   </BrowserRouter>
 );
