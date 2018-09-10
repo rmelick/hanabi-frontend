@@ -1,6 +1,5 @@
-import React, {Component} from "react";
+import React from "react";
 import Button from "@material-ui/core/Button/Button";
-import Select from "@material-ui/core/Select/Select";
 
 
 function renderMenuItem(value) {
@@ -20,9 +19,9 @@ export class HintSelector extends React.Component {
   render() {
     const renderedMenu = this.props.choices.map(choice => renderMenuItem(choice));
     return <div className="HintSelector">
-      <Select value={this.state.myValue} onChange={(event) => this.handleChange(event)}>
+      <select value={this.state.myValue} onChange={(event) => this.handleChange(event)}>
         {renderedMenu}
-      </Select>
+      </select>
       <Button className="hint" variant="contained" color="primary" onClick={() => this.props.giveHintFunction(this.state.value)}>
         {this.props.title}
       </Button>

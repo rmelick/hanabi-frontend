@@ -1,6 +1,5 @@
 import React from "react";
 import {Tile} from "./Tile";
-import {HintSelector} from "./HintSelector";
 import {PlayDiscardSelector} from "./PlayDiscardSelector";
 
 function renderTile(tile) {
