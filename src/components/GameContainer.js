@@ -68,7 +68,6 @@ export class GameContainer extends React.Component {
   };
 
   giveHint = (playerId, color, rank) => {
-    console.log(`giving hint ${playerId} ${color} ${rank}`);
     fetch(`http://localhost:8080/games/${this.state.game_id}/move/hint`,
       {
         headers: {
@@ -95,12 +94,65 @@ export class GameContainer extends React.Component {
       )
   };
 
+  play = (tileIndex) => {
+    console.log("play" + tileIndex);
+    fetch(`http://localhost:8080/games/${this.state.game_id}/move/play`,
+      {
+        headers: {
+          "X-Player-Id": this.state.player_id,
+          'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({
+          "position": tileIndex
+        })
+      })
+      .then(
+        (result) => {
+          this.refreshGameState();
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )
+  };
+
+  discard = (tileIndex) => {
+    fetch(`http://localhost:8080/games/${this.state.game_id}/move/discard`,
+      {
+        headers: {
+          "X-Player-Id": this.state.player_id,
+          'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({
+          "position": tileIndex
+        })
+      })
+      .then(
+        (result) => {
+          this.refreshGameState();
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )
+  };
+
   render() {
     return (
       <Game game={this.state.game}
             newGameFunction={() => this.newGame()}
             refreshGameStateFunction={() => this.refreshGameState()}
             giveHintFunction={(playerId, color, rank) => this.giveHint(playerId, color, rank)}
+            playFunction={(tileIndex) => this.play(tileIndex)}
+            discardFunction={(tileIndex) => this.discard(tileIndex)}
       />
     );
   }

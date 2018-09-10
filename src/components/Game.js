@@ -18,7 +18,12 @@ export function Game(props) {
         Refresh Game State
       </Button>
       <CurrentPlayer players={props.game.players}/>
-      <PlayerHands players={props.game.players} hints={props.game.available_moves.hints} giveHintFunction={props.giveHintFunction}/>
+      <PlayerHands players={props.game.players}
+                   hints={props.game.available_moves.hints}
+                   giveHintFunction={props.giveHintFunction}
+                   playFunction={props.playFunction}
+                   discardFunction={props.discardFunction}
+      />
       <DrawPile draw_pile={props.game.draw_pile}/>
       <DiscardPile discard_pile={props.game.discard_pile}/>
       <Board board={props.game.board}/>

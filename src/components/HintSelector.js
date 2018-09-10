@@ -10,17 +10,17 @@ function renderMenuItem(value) {
 export class HintSelector extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: ''};
+    this.state = {myValue: ''};
   }
 
   handleChange = event => {
-    this.setState({value: event.target.value})
+    this.setState({myValue: event.target.value})
   };
 
   render() {
     const renderedMenu = this.props.choices.map(choice => renderMenuItem(choice));
     return <div className="HintSelector">
-      <Select value={this.state.value} onChange={(event) => this.handleChange(event)}>
+      <Select value={this.state.myValue} onChange={(event) => this.handleChange(event)}>
         {renderedMenu}
       </Select>
       <Button className="hint" variant="contained" color="primary" onClick={() => this.props.giveHintFunction(this.state.value)}>
