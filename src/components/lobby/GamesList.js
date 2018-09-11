@@ -16,7 +16,7 @@ function gameToRow(game) {
       <TableCell>{game.status}</TableCell>
       <TableCell numeric>{game.num_players}</TableCell>
       <TableCell>
-        <Link to={`/game/${game.game_id}`}>Join Game Lobby</Link>
+        <Link to={`/game/${game.game_id}`}>View Game Lobby</Link>
       </TableCell>
     </TableRow>
   );

@@ -16,7 +16,7 @@ export class GameContainer extends React.Component {
   }
 
   refreshGameSummary = () => {
-    fetch(`http://localhost:8080/games/${this.props.match.params.game_id}/summary`)
+    fetch(`http://192.168.1.73:8080/games/${this.props.match.params.game_id}/summary`)
       .then(res => res.json())
       .then(
         (result) => {

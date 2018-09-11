@@ -14,7 +14,7 @@ export class InProgressGameContainer extends React.Component {
   }
 
   refreshGameState = () => {
-    fetch(`http://localhost:8080/games/${this.props.game_summary.game_id}/state`, {
+    fetch(`http://192.168.1.73:8080/games/${this.props.game_summary.game_id}/state`, {
       headers: {
         "X-Player-Id": this.props.player_id
       }
@@ -37,7 +37,7 @@ export class InProgressGameContainer extends React.Component {
   };
 
   giveHint = (playerId, color, rank) => {
-    fetch(`http://localhost:8080/games/${this.props.game_summary.game_id}/move/hint`,
+    fetch(`http://192.168.1.73:8080/games/${this.props.game_summary.game_id}/move/hint`,
       {
         headers: {
           "X-Player-Id": this.props.player_id,
@@ -65,7 +65,7 @@ export class InProgressGameContainer extends React.Component {
 
   play = (tileIndex) => {
     console.log("play" + tileIndex);
-    fetch(`http://localhost:8080/games/${this.props.game_summary.game_id}/move/play`,
+    fetch(`http://192.168.1.73:8080/games/${this.props.game_summary.game_id}/move/play`,
       {
         headers: {
           "X-Player-Id": this.props.player_id,
@@ -90,7 +90,7 @@ export class InProgressGameContainer extends React.Component {
   };
 
   discard = (tileIndex) => {
-    fetch(`http://localhost:8080/games/${this.props.game_summary.game_id}/move/discard`,
+    fetch(`http://192.168.1.73:8080/games/${this.props.game_summary.game_id}/move/discard`,
       {
         headers: {
           "X-Player-Id": this.props.player_id,

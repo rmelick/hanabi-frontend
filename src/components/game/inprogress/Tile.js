@@ -3,20 +3,20 @@ import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 
 function formatHint(hint) {
   if (hint.color) {
-    return `Color: ${hint.color}`
+    return `${hint.color}`
   } else if (hint.rank) {
-    return `Rank: ${hint.rank}`
+    return `${hint.rank}`
   }
 }
 
 function formatHints(hint_information) {
   let hintString = "";
-  if (hint_information.positive_hints_given) {
-    hintString += "Positive Hints:\n";
+  if (hint_information.positive_hints_given && hint_information.positive_hints_given.length > 0) {
+    hintString += "Positive:\n";
     hintString += hint_information.positive_hints_given.map(hint => `${formatHint(hint)}\n`);
   }
-  if (hint_information.negative_hints_given) {
-    hintString += "Negative Hints:\n";
+  if (hint_information.negative_hints_given && hint_information.negative_hints_given.length > 0) {
+    hintString += "Negative:\n";
     hintString += hint_information.negative_hints_given.map(hint => `${formatHint(hint)}\n`);
   }
   return hintString

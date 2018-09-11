@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "@material-ui/core/Button/Button";
+import Select from "@material-ui/core/Select/Select";
 
 
 function renderMenuItem(value) {
@@ -30,9 +31,9 @@ export class PlayDiscardSelector extends React.Component {
     const tileIndexes = consecutiveArray(this.props.tiles.length);
     const renderedMenu = tileIndexes.map(index => renderMenuItem(index));
     return <div className="PlayDiscardSelector">
-      <select value={this.state.myValue} onChange={this.handleChange}>
+      <Select value={this.state.myValue} onChange={this.handleChange}>
         {renderedMenu}
-      </select>
+      </Select>
       <Button className="play" variant="contained" color="primary" onClick={() => this.props.playFunction(this.state.myValue)}>
         Play
       </Button>

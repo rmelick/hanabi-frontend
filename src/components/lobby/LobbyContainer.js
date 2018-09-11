@@ -14,7 +14,7 @@ export class LobbyContainer extends React.Component {
   }
 
   refreshGamesList = () => {
-    fetch("http://localhost:8080/games", {method: "GET"})
+    fetch("http://192.168.1.73:8080/games", {method: "GET"})
       .then(res => res.json())
       .then(
         (result) => {
@@ -30,7 +30,7 @@ export class LobbyContainer extends React.Component {
   };
 
   newGame = () => {
-    fetch("http://localhost:8080/newGame", {method: "POST"})
+    fetch("http://192.168.1.73:8080/newGame", {method: "POST"})
       .then(
         (result) => {
           this.refreshGamesList();

@@ -3,7 +3,7 @@ import NotYetStartedGame from "./NotYetStartedGame";
 
 export class NotYetStartedGameContainer extends React.Component {
   joinGame = () => {
-    fetch(`http://localhost:8080/games/${this.props.game_summary.game_id}/join?playerName=${this.props.player_name}`,
+    fetch(`http://192.168.1.73:8080/games/${this.props.game_summary.game_id}/join?playerName=${this.props.player_name}`,
       {
         method: "POST",
         headers: {
@@ -24,7 +24,7 @@ export class NotYetStartedGameContainer extends React.Component {
   };
 
   startGame = () => {
-    fetch(`http://localhost:8080/games/${this.props.game_summary.game_id}/start`,
+    fetch(`http://192.168.1.73:8080/games/${this.props.game_summary.game_id}/start`,
       {
         method: "POST",
         headers: {

@@ -13,5 +13,8 @@ function findCurrentPlayerName(players) {
 }
 
 export function CurrentPlayer(props) {
-  return <div className="currentPlayer">CurrentPlayer: {findCurrentPlayerName(props.players)}</div>
+  return <div className="currentPlayer">
+      <div>You Are: {props.players.this_player.name}</div>
+      <div>CurrentPlayer: {findCurrentPlayerName(props.players)}</div>
+    </div>
 }
