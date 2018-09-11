@@ -35,16 +35,16 @@ export class GameContainer extends React.Component {
   };
 
   render() {
-    console.log("game state is");
-    console.log(this.state);
     if (this.state.game_summary) {
       switch (this.state.game_summary.status) {
         case "WAITING_TO_BEGIN":
-          return <NotYetStartedGameContainer game_id={this.state.game_id}/>
+          return <NotYetStartedGameContainer game_summary={this.state.game_summary}/>
         case "IN_PROGRESS":
-          return <InProgressGameContainer game_id={this.state.game_id}/>;
+          return <InProgressGameContainer game_summary={this.state.game_summary}/>;
         case "COMPLETED":
-          return <CompletedGameContainer game_id={this.state.game_id}/>
+          return <CompletedGameContainer game_summary={this.state.game_summary}/>;
+        default:
+          return `Unknown game status for game ${this.state.game_id}: ${this.state.game_summary.status}`
       }
     } else {
       return "";

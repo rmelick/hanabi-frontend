@@ -1,17 +1,19 @@
 import React from "react";
-import example_state from "../../example_state";
-import {Game} from "./Game";
 
 export class NotYetStartedGameContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      game_id: props.game_id
+      game_summary: props.game_summary
     };
   }
 
 
   render() {
-    return `Game ${this.state.game_id} is not yet started`
+    return <div className="not-yet-started game-summary">
+      Game Id: {this.state.game_summary.game_id}
+      Num Players: {this.state.game_summary.num_players}
+      Status: {this.state.game_summary.status}
+    </div>
   }
 }

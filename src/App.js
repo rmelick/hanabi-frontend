@@ -8,7 +8,6 @@ import {
   Link
 } from 'react-router-dom'
 import {LobbyContainer} from "./components/lobby/LobbyContainer";
-import GameLobbyContainer from "./components/gamelobby/GameLobby";
 
 console.log("example_state");
 console.log(example_state);
@@ -32,7 +31,6 @@ const BasicExample = () => (
       <Route exact path="/" component={Home}/>
       <Route path="/game/:game_id" component={GameContainer}/>
       <Route path="/lobby" component={LobbyContainer}/>
-      <Route path="/gamelobby/:game_id" component={GameLobbyContainer}/>
     </div>
   </BrowserRouter>
 );
