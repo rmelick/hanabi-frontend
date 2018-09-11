@@ -1,4 +1,5 @@
 import React from "react";
+import NotYetStartedGame from "./NotYetStartedGame";
 
 export class NotYetStartedGameContainer extends React.Component {
   constructor(props) {
@@ -8,12 +9,29 @@ export class NotYetStartedGameContainer extends React.Component {
     };
   }
 
+  refreshGameSummary = () => {
+    fetch(`http://localhost:8080/games/${this.state.game_summary.game_id}/summary`)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({game_summary: result});
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )
+  };
 
   render() {
-    return <div className="not-yet-started game-summary">
-      Game Id: {this.state.game_summary.game_id}
-      Num Players: {this.state.game_summary.num_players}
-      Status: {this.state.game_summary.status}
-    </div>
+    return <NotYetStartedGame
+      game_summary={this.state.game_summary}
+      refreshSummaryFunction={() => this.refreshGameSummary()}
+    />
   }
 }
