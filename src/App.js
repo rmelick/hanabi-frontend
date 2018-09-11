@@ -1,5 +1,4 @@
 import './App.css';
-import example_state from "./example_state";
 import React from 'react'
 import {GameContainer} from "./components/game/GameContainer";
 import {
@@ -10,9 +9,6 @@ import {
 import {LobbyContainer} from "./components/lobby/LobbyContainer";
 import uuidv4 from "uuid/v4";
 import Chance from "chance";
-
-console.log("example_state");
-console.log(example_state);
 
 
 const BasicExample = () => {

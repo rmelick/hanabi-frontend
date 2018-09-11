@@ -45,9 +45,17 @@ export class GameContainer extends React.Component {
             refreshGameSummaryFunction={() => this.refreshGameSummary()}
           />;
         case "IN_PROGRESS":
-          return <InProgressGameContainer game_summary={this.state.game_summary}/>;
+          return <InProgressGameContainer
+            player_id={this.props.player_id}
+            player_name={this.props.player_name}
+            game_summary={this.state.game_summary}
+          />;
         case "COMPLETED":
-          return <CompletedGameContainer game_summary={this.state.game_summary}/>;
+          return <CompletedGameContainer
+            player_id={this.props.player_id}
+            player_name={this.props.player_name}
+            game_summary={this.state.game_summary}
+          />;
         default:
           return `Unknown game status for game ${this.props.match.params.game_id}: ${this.state.game_summary.status}`
       }

@@ -11,9 +11,6 @@ import {HintsTracker} from "./HintsTracker";
 export function Game(props) {
   return (
     <div className="game">
-      <Button variant="contained" color="primary" onClick={props.newGameFunction}>
-        New Game
-      </Button>
       <Button variant="contained" color="primary" onClick={props.refreshGameStateFunction}>
         Refresh Game State
       </Button>

@@ -13,45 +13,10 @@ export class InProgressGameContainer extends React.Component {
     this.refreshGameState();
   }
 
-
-  newGame = () => {
-    fetch("http://localhost:8080/newGame?numPlayers=4", {method: "POST"})
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({game_id: result.game_id});
-          this.joinGame();
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
-  };
-
-  joinGame = () => {
-    fetch(`http://localhost:8080/games/${this.state.game_id}/join`, {method: "POST"})
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({player_id: result.player_id});
-          this.refreshGameState();
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
-  };
-
   refreshGameState = () => {
-    fetch(`http://localhost:8080/games/${this.state.game_id}/state`, {
+    fetch(`http://localhost:8080/games/${this.props.game_summary.game_id}/state`, {
       headers: {
-        "X-Player-Id": this.state.player_id
+        "X-Player-Id": this.props.player_id
       }
     })
       .then(res => res.json())
@@ -72,10 +37,10 @@ export class InProgressGameContainer extends React.Component {
   };
 
   giveHint = (playerId, color, rank) => {
-    fetch(`http://localhost:8080/games/${this.state.game_id}/move/hint`,
+    fetch(`http://localhost:8080/games/${this.props.game_summary.game_id}/move/hint`,
       {
         headers: {
-          "X-Player-Id": this.state.player_id,
+          "X-Player-Id": this.props.player_id,
           'Content-Type': 'application/json'
         },
         method: "POST",
@@ -100,10 +65,10 @@ export class InProgressGameContainer extends React.Component {
 
   play = (tileIndex) => {
     console.log("play" + tileIndex);
-    fetch(`http://localhost:8080/games/${this.state.game_id}/move/play`,
+    fetch(`http://localhost:8080/games/${this.props.game_summary.game_id}/move/play`,
       {
         headers: {
-          "X-Player-Id": this.state.player_id,
+          "X-Player-Id": this.props.player_id,
           'Content-Type': 'application/json'
         },
         method: "POST",
@@ -125,10 +90,10 @@ export class InProgressGameContainer extends React.Component {
   };
 
   discard = (tileIndex) => {
-    fetch(`http://localhost:8080/games/${this.state.game_id}/move/discard`,
+    fetch(`http://localhost:8080/games/${this.props.game_summary.game_id}/move/discard`,
       {
         headers: {
-          "X-Player-Id": this.state.player_id,
+          "X-Player-Id": this.props.player_id,
           'Content-Type': 'application/json'
         },
         method: "POST",
@@ -150,12 +115,9 @@ export class InProgressGameContainer extends React.Component {
   };
 
   render() {
-    console.log("game state is");
-    console.log(this.state);
     if (this.state.game) {
       return (
         <Game game={this.state.game}
-              newGameFunction={() => this.newGame()}
               refreshGameStateFunction={() => this.refreshGameState()}
               giveHintFunction={(playerId, color, rank) => this.giveHint(playerId, color, rank)}
               playFunction={(tileIndex) => this.play(tileIndex)}
