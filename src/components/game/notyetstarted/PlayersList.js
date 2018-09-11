@@ -2,10 +2,8 @@ import React from "react";
 import Table from "@material-ui/core/Table/Table";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableCell from "@material-ui/core/TableCell/TableCell";
-import Button from "@material-ui/core/Button/Button";
 import TableHead from "@material-ui/core/TableHead/TableHead";
 import TableBody from "@material-ui/core/TableBody/TableBody";
-import {Link} from "react-router-dom";
 
 function playerToRow(player) {
   return (

@@ -12,6 +12,9 @@ export default function NotYetStartedGame(props) {
       <Button variant="contained" color="primary" onClick={props.joinGameFunction}>
         Join Game
       </Button>
+      <Button variant="contained" color="primary" onClick={props.startGameFunction}>
+        Start Game
+      </Button>
       <div>Your Name: {props.player_name}</div>
       <div>Your Id: {props.player_id}</div>
       <div>Game Id: {props.game_summary.game_id}</div>

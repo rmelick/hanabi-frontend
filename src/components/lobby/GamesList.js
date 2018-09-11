@@ -7,7 +7,7 @@ import TableHead from "@material-ui/core/TableHead/TableHead";
 import TableBody from "@material-ui/core/TableBody/TableBody";
 import {Link} from "react-router-dom";
 
-function gameToRow(game, joinFunction) {
+function gameToRow(game) {
   return (
     <TableRow key={game.game_id}>
       <TableCell component="th" scope="row">
@@ -36,7 +36,7 @@ export function GamesList(props) {
         </TableRow>
       </TableHead>
       <TableBody>
-        {props.games.map(game => {return gameToRow(game, props.joinGameFunction)})}
+        {props.games.map(game => {return gameToRow(game)})}
       </TableBody>
     </Table>
     </div>

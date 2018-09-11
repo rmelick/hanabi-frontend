@@ -5,8 +5,6 @@ export class LobbyContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      player_id: "test-player-id",
-      player_name: "Test Player",
       games: []
     };
   }
@@ -46,36 +44,12 @@ export class LobbyContainer extends React.Component {
       )
   };
 
-  joinGame = (gameId) => {
-    fetch(`http://localhost:8080/games/${gameId}/join?playerName=${this.state.player_name}`,
-      {
-        headers: {
-          "X-Player-Id": this.state.player_id,
-          'Content-Type': 'application/json'
-        },
-        method: "POST"
-      })
-      .then(
-        (result) => {
-
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
-  };
-
-
   render() {
     return (
       <GamesList
         games = {this.state.games}
         refreshFunction={() => this.refreshGamesList()}
         newGameFunction={() => this.newGame()}
-        joinGameFunction={(gameId) => this.joinGame(gameId)}
       />
     );
   }

@@ -16,7 +16,7 @@ export class GameContainer extends React.Component {
   }
 
   refreshGameSummary = () => {
-    fetch(`http://localhost:8080/games/${this.state.game_id}/summary`)
+    fetch(`http://localhost:8080/games/${this.props.match.params.game_id}/summary`)
       .then(res => res.json())
       .then(
         (result) => {
@@ -38,13 +38,18 @@ export class GameContainer extends React.Component {
     if (this.state.game_summary) {
       switch (this.state.game_summary.status) {
         case "WAITING_TO_BEGIN":
-          return <NotYetStartedGameContainer game_summary={this.state.game_summary}/>
+          return <NotYetStartedGameContainer
+            player_id={this.props.player_id}
+            player_name={this.props.player_name}
+            game_summary={this.state.game_summary}
+            refreshGameSummaryFunction={() => this.refreshGameSummary()}
+          />;
         case "IN_PROGRESS":
           return <InProgressGameContainer game_summary={this.state.game_summary}/>;
         case "COMPLETED":
           return <CompletedGameContainer game_summary={this.state.game_summary}/>;
         default:
-          return `Unknown game status for game ${this.state.game_id}: ${this.state.game_summary.status}`
+          return `Unknown game status for game ${this.props.match.params.game_id}: ${this.state.game_summary.status}`
       }
     } else {
       return "";
