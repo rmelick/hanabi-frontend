@@ -24,17 +24,15 @@ const BasicExample = () => (
     <div>
       <ul>
         <li><Link to="/">Home</Link></li>
-        <li><Link to="/game">Game</Link></li>
         <li><Link to="/lobby">Lobby</Link></li>
-        <li><Link to="/gamelobby">Game Lobby</Link></li>
       </ul>
 
       <hr/>
 
       <Route exact path="/" component={Home}/>
-      <Route path="/game" component={GameContainer}/>
+      <Route path="/game/:game_id" component={GameContainer}/>
       <Route path="/lobby" component={LobbyContainer}/>
-      <Route path="/gamelobby" component={GameLobbyContainer}/>
+      <Route path="/gamelobby/:game_id" component={GameLobbyContainer}/>
     </div>
   </BrowserRouter>
 );

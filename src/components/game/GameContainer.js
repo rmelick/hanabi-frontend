@@ -5,7 +5,13 @@ import {Game} from "./Game";
 export class GameContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {game: example_state};
+    this.state = {
+      game_id: props.match.params.game_id
+    };
+  }
+
+  componentDidMount() {
+    this.refreshGameSummary();
   }
 
 
@@ -34,6 +40,25 @@ export class GameContainer extends React.Component {
           this.setState({player_id: result.player_id});
           this.refreshGameState();
         },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )
+  };
+
+  refreshGameSummary = () => {
+    fetch(`http://localhost:8080/games/${this.state.game_id}/summary`)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({game_summary: result});
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
         (error) => {
           this.setState({
             isLoaded: true,
@@ -145,15 +170,46 @@ export class GameContainer extends React.Component {
       )
   };
 
+  waitingToBegin() {
+    return "game waiting to being"
+  }
+
+  inProgress() {
+    if (this.state.game) {
+      return (
+        <Game game={this.state.game}
+              newGameFunction={() => this.newGame()}
+              refreshGameStateFunction={() => this.refreshGameState()}
+              giveHintFunction={(playerId, color, rank) => this.giveHint(playerId, color, rank)}
+              playFunction={(tileIndex) => this.play(tileIndex)}
+              discardFunction={(tileIndex) => this.discard(tileIndex)}
+        />
+      );
+    } else {
+      return "";
+    }
+  }
+
+  completed() {
+    return "completed game"
+  }
+
   render() {
-    return (
-      <Game game={this.state.game}
-            newGameFunction={() => this.newGame()}
-            refreshGameStateFunction={() => this.refreshGameState()}
-            giveHintFunction={(playerId, color, rank) => this.giveHint(playerId, color, rank)}
-            playFunction={(tileIndex) => this.play(tileIndex)}
-            discardFunction={(tileIndex) => this.discard(tileIndex)}
-      />
-    );
+    console.log("game state is");
+    console.log(this.state);
+    if (this.state.game_summary) {
+      switch (this.state.game_summary.status) {
+        case "WAITING_TO_BEGIN":
+          return this.waitingToBegin();
+        case "IN_PROGRESS":
+          this.refreshGameState();
+          return this.inProgress();
+        case "COMPLETED":
+          return this.completed();
+      }
+    } else {
+      return "";
+    }
+
   }
 }
