@@ -1,7 +1,7 @@
 import React from "react";
-import {InProgressGameContainer} from "./InProgressGameContainer";
-import {NotYetStartedGameContainer} from "./NotYetStartedGameContainer";
-import {CompletedGameContainer} from "./CompletedGameContainer";
+import {InProgressGameContainer} from "./inprogress/InProgressGameContainer";
+import {NotYetStartedGameContainer} from "./notyetstarted/NotYetStartedGameContainer";
+import {CompletedGameContainer} from "./completed/CompletedGameContainer";
 
 export class GameContainer extends React.Component {
   constructor(props) {
