@@ -1,6 +1,7 @@
 import React from "react";
-import example_state from "../../example_state";
-import {Game} from "./Game";
+import {InProgressGameContainer} from "./InProgressGameContainer";
+import {NotYetStartedGameContainer} from "./NotYetStartedGameContainer";
+import {CompletedGameContainer} from "./CompletedGameContainer";
 
 export class GameContainer extends React.Component {
   constructor(props) {
@@ -13,41 +14,6 @@ export class GameContainer extends React.Component {
   componentDidMount() {
     this.refreshGameSummary();
   }
-
-
-  newGame = () => {
-    fetch("http://localhost:8080/newGame?numPlayers=4", {method: "POST"})
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({game_id: result.game_id});
-          this.joinGame();
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
-  };
-
-  joinGame = () => {
-    fetch(`http://localhost:8080/games/${this.state.game_id}/join`, {method: "POST"})
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({player_id: result.player_id});
-          this.refreshGameState();
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
-  };
 
   refreshGameSummary = () => {
     fetch(`http://localhost:8080/games/${this.state.game_id}/summary`)
@@ -68,144 +34,17 @@ export class GameContainer extends React.Component {
       )
   };
 
-
-  refreshGameState = () => {
-    fetch(`http://localhost:8080/games/${this.state.game_id}/state`, {
-      headers: {
-        "X-Player-Id": this.state.player_id
-      }
-    })
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({game: result});
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
-  };
-
-  giveHint = (playerId, color, rank) => {
-    fetch(`http://localhost:8080/games/${this.state.game_id}/move/hint`,
-      {
-        headers: {
-          "X-Player-Id": this.state.player_id,
-          'Content-Type': 'application/json'
-        },
-        method: "POST",
-        body: JSON.stringify({
-          "player_id": playerId,
-          "color": color,
-          "rank": rank
-        })
-      })
-      .then(
-        (result) => {
-          this.refreshGameState();
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
-  };
-
-  play = (tileIndex) => {
-    console.log("play" + tileIndex);
-    fetch(`http://localhost:8080/games/${this.state.game_id}/move/play`,
-      {
-        headers: {
-          "X-Player-Id": this.state.player_id,
-          'Content-Type': 'application/json'
-        },
-        method: "POST",
-        body: JSON.stringify({
-          "position": tileIndex
-        })
-      })
-      .then(
-        (result) => {
-          this.refreshGameState();
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
-  };
-
-  discard = (tileIndex) => {
-    fetch(`http://localhost:8080/games/${this.state.game_id}/move/discard`,
-      {
-        headers: {
-          "X-Player-Id": this.state.player_id,
-          'Content-Type': 'application/json'
-        },
-        method: "POST",
-        body: JSON.stringify({
-          "position": tileIndex
-        })
-      })
-      .then(
-        (result) => {
-          this.refreshGameState();
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
-  };
-
-  waitingToBegin() {
-    return "game waiting to being"
-  }
-
-  inProgress() {
-    if (this.state.game) {
-      return (
-        <Game game={this.state.game}
-              newGameFunction={() => this.newGame()}
-              refreshGameStateFunction={() => this.refreshGameState()}
-              giveHintFunction={(playerId, color, rank) => this.giveHint(playerId, color, rank)}
-              playFunction={(tileIndex) => this.play(tileIndex)}
-              discardFunction={(tileIndex) => this.discard(tileIndex)}
-        />
-      );
-    } else {
-      return "";
-    }
-  }
-
-  completed() {
-    return "completed game"
-  }
-
   render() {
     console.log("game state is");
     console.log(this.state);
     if (this.state.game_summary) {
       switch (this.state.game_summary.status) {
         case "WAITING_TO_BEGIN":
-          return this.waitingToBegin();
+          return <NotYetStartedGameContainer game_id={this.state.game_id}/>
         case "IN_PROGRESS":
-          this.refreshGameState();
-          return this.inProgress();
+          return <InProgressGameContainer game_id={this.state.game_id}/>;
         case "COMPLETED":
-          return this.completed();
+          return <CompletedGameContainer game_id={this.state.game_id}/>
       }
     } else {
       return "";
