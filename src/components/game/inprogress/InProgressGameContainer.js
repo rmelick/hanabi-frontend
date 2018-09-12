@@ -14,10 +14,6 @@ export class InProgressGameContainer extends React.Component {
     this.refreshGameState();
   }
 
-  applyNewGameState(gameState) {
-    this.setState({game: gameState});
-  }
-
   refreshGameState = () => {
     fetch(`http://192.168.1.73:8080/games/${this.props.game_summary.game_id}/state`, {
       headers: {
@@ -27,7 +23,7 @@ export class InProgressGameContainer extends React.Component {
       .then(res => res.json())
       .then(
         (result) => {
-          this.applyNewGameState(result);
+          this.setState({game: result});
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
@@ -123,11 +119,9 @@ export class InProgressGameContainer extends React.Component {
     if (this.state.game) {
       return (
         <div>
-        <Websocket url='http://192.168.1.73:8080/ws' topics={["/topic/all", `/topic/${this.props.game_summary.game_id}`]}
+        <Websocket url='http://192.168.1.73:8080/ws' topics={[`/topic/gamestate/${this.props.game_summary.game_id}`]}
                    onMessage={(msg) => {
-                     console.log("received websocket message");
-                     console.log(msg);
-                     this.applyNewGameState(msg);
+                     this.refreshGameState();
                    }}/>
         <Game game={this.state.game}
               refreshGameStateFunction={() => this.refreshGameState()}
