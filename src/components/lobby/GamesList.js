@@ -10,14 +10,14 @@ import {Link} from "react-router-dom";
 function gameToRow(game) {
   return (
     <TableRow key={game.game_id}>
+      <TableCell>
+        <Link to={`/game/${game.game_id}`}>View Game Lobby</Link>
+      </TableCell>
       <TableCell component="th" scope="row">
         {game.game_id}
       </TableCell>
       <TableCell>{game.status}</TableCell>
       <TableCell numeric>{game.num_players}</TableCell>
-      <TableCell>
-        <Link to={`/game/${game.game_id}`}>View Game Lobby</Link>
-      </TableCell>
     </TableRow>
   );
 }
@@ -29,10 +29,10 @@ export function GamesList(props) {
     <Table>
       <TableHead>
         <TableRow>
+          <TableCell>Join</TableCell>
           <TableCell>Game Id</TableCell>
           <TableCell>Status</TableCell>
           <TableCell numeric>Current Players</TableCell>
-          <TableCell>Join</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
