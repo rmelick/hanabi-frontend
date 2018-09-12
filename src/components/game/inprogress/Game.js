@@ -7,10 +7,15 @@ import {Board} from "./Board";
 import {CurrentPlayer} from "./CurrentPlayer";
 import {MistakesCounter} from "./MistakesCounter";
 import {HintsTracker} from "./HintsTracker";
+import {GameStatus} from "./GameStatus";
 
 export function Game(props) {
   return (
     <div className="game">
+      <GameStatus
+        status={props.game.is_completed ? "COMPLETED" : "IN_PROGRESS"}
+        score={props.game.board.scored_points}
+      />
       <Button variant="contained" color="primary" onClick={props.refreshGameStateFunction}>
         Refresh Game State
       </Button>
