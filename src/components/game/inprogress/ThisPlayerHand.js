@@ -14,7 +14,7 @@ function showPlayDiscardModal(tile) {
 export function ThisPlayerHand(props) {
   const renderedTiles = props.player.tiles.map(tile => renderTile(tile));
   return (
-    <div className="player-hand">
+    <div className={`player-hand ${props.player.is_current_player ? "current-player" : ""}`}>
       {props.player.name}
       {renderedTiles}
       <PlayDiscardSelector tiles={props.player.tiles}

@@ -10,7 +10,7 @@ function renderTile(tile) {
 export function OtherPlayerHand(props) {
   const renderedTiles = props.player.tiles.map(tile => renderTile(tile));
   return (
-    <div className="player-hand">
+    <div className={`player-hand ${props.player.is_current_player ? "current-player" : ""}`}>
       {props.player.name}
       {renderedTiles}
       <HintSelector title="Color Hint" choices={props.hints.color_hints}

@@ -60,3 +60,7 @@
 .PlayDiscardSelector {
   display: inline;
 }
+
+.current-player {
+  background-color: forestgreen;
+}
