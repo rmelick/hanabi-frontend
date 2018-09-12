@@ -15,7 +15,7 @@ export class InProgressGameContainer extends React.Component {
   }
 
   refreshGameState = () => {
-    fetch(`http://192.168.1.73:8080/games/${this.props.game_summary.game_id}/state`, {
+    fetch(`http://localhost:8080/games/${this.props.game_summary.game_id}/state`, {
       headers: {
         "X-Player-Id": this.props.player_id
       }
@@ -38,7 +38,7 @@ export class InProgressGameContainer extends React.Component {
   };
 
   giveHint = (playerId, color, rank) => {
-    fetch(`http://192.168.1.73:8080/games/${this.props.game_summary.game_id}/move/hint`,
+    fetch(`http://localhost:8080/games/${this.props.game_summary.game_id}/move/hint`,
       {
         headers: {
           "X-Player-Id": this.props.player_id,
@@ -66,7 +66,7 @@ export class InProgressGameContainer extends React.Component {
 
   play = (tileIndex) => {
     console.log("play" + tileIndex);
-    fetch(`http://192.168.1.73:8080/games/${this.props.game_summary.game_id}/move/play`,
+    fetch(`http://localhost:8080/games/${this.props.game_summary.game_id}/move/play`,
       {
         headers: {
           "X-Player-Id": this.props.player_id,
@@ -91,7 +91,7 @@ export class InProgressGameContainer extends React.Component {
   };
 
   discard = (tileIndex) => {
-    fetch(`http://192.168.1.73:8080/games/${this.props.game_summary.game_id}/move/discard`,
+    fetch(`http://localhost:8080/games/${this.props.game_summary.game_id}/move/discard`,
       {
         headers: {
           "X-Player-Id": this.props.player_id,
@@ -119,7 +119,7 @@ export class InProgressGameContainer extends React.Component {
     if (this.state.game) {
       return (
         <div>
-        <Websocket url='http://192.168.1.73:8080/ws' topics={[`/topic/gamestate/${this.props.game_summary.game_id}`]}
+        <Websocket url='http://localhost:8080/ws' topics={[`/topic/gamestate/${this.props.game_summary.game_id}`]}
                    onMessage={(msg) => {
                      this.refreshGameState();
                    }}/>
