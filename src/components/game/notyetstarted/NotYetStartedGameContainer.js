@@ -1,5 +1,6 @@
 import React from "react";
 import NotYetStartedGame from "./NotYetStartedGame";
+import Websocket from "../../infra/Websocket";
 
 export class NotYetStartedGameContainer extends React.Component {
   joinGame = () => {
@@ -45,13 +46,21 @@ export class NotYetStartedGameContainer extends React.Component {
   };
 
   render() {
-    return <NotYetStartedGame
-      game_summary={this.props.game_summary}
-      player_name={this.props.player_name}
-      player_id={this.props.player_id}
-      refreshSummaryFunction={this.props.refreshGameSummaryFunction}
-      joinGameFunction = {() => this.joinGame()}
-      startGameFunction = {() => this.startGame()}
-    />
+    return (
+      <div>
+        <Websocket url='http://192.168.1.73:8080/ws' topics={[`/topic/gamestatesummary/${this.props.game_summary.game_id}`]}
+                   onMessage={(msg) => {
+                     this.props.refreshGameSummaryFunction();
+                   }}/>
+        <NotYetStartedGame
+          game_summary={this.props.game_summary}
+          player_name={this.props.player_name}
+          player_id={this.props.player_id}
+          refreshSummaryFunction={this.props.refreshGameSummaryFunction}
+          joinGameFunction = {() => this.joinGame()}
+          startGameFunction = {() => this.startGame()}
+        />
+      </div>
+    )
   }
 }
